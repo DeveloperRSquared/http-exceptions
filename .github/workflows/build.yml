@@ -24,16 +24,16 @@ jobs:
         run: docker build --tag ${DOCKER_IMAGE_NAME} .
 
       - name: Check code style (black)
-        run: docker run --rm --volume $(pwd)/app/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m black --config /app/pyproject.toml --check .
+        run: docker run --rm --volume $(pwd)/../pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m black --config /app/pyproject.toml --check .
 
       - name: Check code style (flake8)
-        run: docker run --rm --volume $(pwd)/app/.flake8:/app/.flake8 --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m flake8 --config /app/.flake8
+        run: docker run --rm --volume $(pwd)/../.flake8:/app/.flake8 --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m flake8 --config /app/.flake8
 
       - name: Check lint (pylint)
-        run: docker run --rm --volume $(pwd)/app/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m pylint --rcfile /app/pyproject.toml app
+        run: docker run --rm --volume $(pwd)/../pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m pylint --rcfile /app/pyproject.toml app
 
       - name: Check typing (mypy)
-        run: docker run --rm --volume $(pwd)/app/mypy.ini:/app/mypy.ini --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m mypy --config-file /app/mypy.ini app
+        run: docker run --rm --volume $(pwd)/../mypy.ini:/app/mypy.ini --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m mypy --config-file /app/mypy.ini app
 
       # TODO(rikhil): add unit tests here
       # - name: Run tests (pytest)
