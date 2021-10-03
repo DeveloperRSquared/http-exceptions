@@ -2,6 +2,8 @@
 *
 
 # Except ...
-!exceptions/**
+!http_exceptions/**
 !tests/**
+!requirements.txt
+!requirements.dev.txt
 !setup.py
