@@ -1,2 +1,3 @@
 # http-exceptions
-HTTP Exceptions built on FastAPI HTTPException
+
+HTTP Exceptions built on FastAPI's HTTPException
