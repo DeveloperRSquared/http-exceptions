@@ -7,7 +7,7 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: backend
+    working-directory: src
 
 env:
   DOCKER_IMAGE_NAME: http-exceptions
@@ -21,4 +21,4 @@ jobs:
           fetch-depth: 2
 
       - name: Build
-        run: docker build --tag ${DOCKER_IMAGE_NAME} --file backend.dockerfile --build-arg INSTALL_DEV=true .
+        run: docker build --tag ${DOCKER_IMAGE_NAME} .
