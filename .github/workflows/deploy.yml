@@ -10,7 +10,7 @@ defaults:
     working-directory: backend
 
 env:
-  DOCKER_IMAGE_NAME: ragas-api
+  DOCKER_IMAGE_NAME: http-exceptions
 
 jobs:
   deploy:
