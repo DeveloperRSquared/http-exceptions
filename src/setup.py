@@ -16,7 +16,8 @@ with open(os.path.join(setup_directory, 'requirements.txt'), 'r') as requirement
 setup(
     name='http-exceptions',
     version='0.0.1',
-    description="HTTP Exceptions built on FastAPI's HTTPException",
+    description='HTTP Exceptions',
+    long_description="HTTP Exceptions built on FastAPI's HTTPException",
     url='https://github.com/DeveloperRSquared/http-exceptions/',
     author='rikhilrai',
     author_email='developerrsquared@gmail.com',
