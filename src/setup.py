@@ -4,6 +4,8 @@ from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
 
+from http_exceptions import __version__
+
 setup_directory = Path(__file__).absolute().parent
 
 requirements = []
@@ -15,7 +17,7 @@ with open(os.path.join(setup_directory, 'requirements.txt'), 'r') as requirement
 
 setup(
     name='http-exceptions',
-    version='0.0.1',
+    version=__version__,
     description='HTTP Exceptions',
     long_description="HTTP Exceptions built on FastAPI's HTTPException",
     url='https://github.com/DeveloperRSquared/http-exceptions/',
@@ -40,7 +42,14 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Typing :: Typed',
     ],
+    project_urls={
+        'Repository': 'https://github.com/DeveloperRSquared/http-exceptions/',
+    },
 )
