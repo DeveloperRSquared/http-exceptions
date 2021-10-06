@@ -14,7 +14,7 @@ with open(os.path.join(setup_directory, 'requirements.txt'), 'r') as requirement
         if requirement:
             requirements.append(requirement)
 
-with open(str(setup_directory.parent / 'README.md')) as file:
+with open(file=str(setup_directory.parent / 'README.md'), mode='r', encoding='utf-8') as file:
     long_description = file.read()
 
 setup(
