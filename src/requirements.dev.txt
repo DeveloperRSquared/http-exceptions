@@ -1,6 +1,6 @@
-black==21.5b1
+black==21.9b0
 flake8==3.9.2
 mypy==0.910
-pre_commit==2.13.0
-pylint==2.8.2
+pre-commit==2.15.0
+pylint==2.11.1
 pytest==6.2.4
