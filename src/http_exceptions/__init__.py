@@ -1,3 +1,5 @@
+__version__ = '0.0.2'
+
 from .client_exceptions import BadRequestException
 from .client_exceptions import ClientException
 from .client_exceptions import ConflictException
@@ -40,5 +42,3 @@ from .server_exceptions import NotImplementedException
 from .server_exceptions import ServerException
 from .server_exceptions import ServiceUnavailableException
 from .server_exceptions import VariantAlsoNegotiatesException
-
-__version__ = '0.0.1'
