@@ -14,12 +14,14 @@ with open(os.path.join(setup_directory, 'requirements.txt'), 'r') as requirement
         if requirement:
             requirements.append(requirement)
 
+with open(str(setup_directory.parent / 'README.md')) as file:
+    long_description = file.read()
 
 setup(
     name='http-exceptions',
     version=__version__,
-    description='HTTP Exceptions',
-    long_description="HTTP Exceptions built on FastAPI's HTTPException",
+    description="HTTP Exceptions built on FastAPI's HTTPException",
+    long_description_content_type="text/markdown",
     url='https://github.com/DeveloperRSquared/http-exceptions/',
     author='rikhilrai',
     author_email='developerrsquared@gmail.com',

@@ -10,7 +10,7 @@ defaults:
     working-directory: src
 
 env:
-  DOCKER_IMAGE_NAME: http-exceptions
+  DOCKER_IMAGE: http-exceptions
 
 jobs:
   setup:
@@ -31,6 +31,9 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
 
+      - name: Run tests
+        run: pytest --capture=no --log-cli-level=INFO
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -39,19 +42,19 @@ jobs:
           fetch-depth: 2
 
       - name: Build
-        run: docker build --tag ${DOCKER_IMAGE_NAME} .
+        run: docker build --tag ${DOCKER_IMAGE} .
 
       - name: Check code style (black)
-        run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m black --config /app/pyproject.toml --check .
+        run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m black --config /app/pyproject.toml --check .
 
       - name: Check code style (flake8)
-        run: docker run --rm --volume $(pwd)/.flake8:/app/.flake8 --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m flake8 --config /app/.flake8
+        run: docker run --rm --volume $(pwd)/.flake8:/app/.flake8 --env CI=true --entrypoint python ${DOCKER_IMAGE} -m flake8 --config /app/.flake8
 
       - name: Check lint (pylint)
-        run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m pylint --rcfile /app/pyproject.toml http_exceptions tests
+        run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pylint --rcfile /app/pyproject.toml http_exceptions tests
 
       - name: Check typing (mypy)
-        run: docker run --rm --volume $(pwd)/mypy.ini:/app/mypy.ini --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m mypy --config-file /app/mypy.ini http_exceptions tests
+        run: docker run --rm --volume $(pwd)/mypy.ini:/app/mypy.ini --env CI=true --entrypoint python ${DOCKER_IMAGE} -m mypy --config-file /app/mypy.ini http_exceptions tests
 
       - name: Run tests (pytest)
-        run: docker run --rm --env CI=true --entrypoint python ${DOCKER_IMAGE_NAME} -m pytest --capture=no --log-cli-level=INFO
+        run: docker run --rm --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pytest --capture=no --log-cli-level=INFO
