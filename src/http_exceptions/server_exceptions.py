@@ -1,9 +1,7 @@
 # pylint: disable=cyclic-import
 from __future__ import annotations
 
-from typing import Mapping
 from typing import Optional
-from typing import Type
 
 from .http_exception import HTTPException
 
@@ -78,7 +76,7 @@ class NetworkAuthenticationRequiredException(ServerException):
         super().__init__(status_code=511, detail=detail)
 
 
-SERVER_EXCEPTIONS: Mapping[int, Type[ServerException]] = {
+SERVER_EXCEPTIONS = {
     500: InternalServerErrorException,
     501: NotImplementedException,
     502: BadGatewayException,

@@ -1,9 +1,7 @@
 # pylint: disable=cyclic-import
 from __future__ import annotations
 
-from typing import Mapping
 from typing import Optional
-from typing import Type
 
 from .http_exception import HTTPException
 
@@ -186,7 +184,7 @@ class UnavailableForLegalReasonsException(ClientException):
         super().__init__(status_code=451, detail=detail)
 
 
-CLIENT_EXCEPTIONS: Mapping[int, Type[ClientException]] = {
+CLIENT_EXCEPTIONS = {
     400: BadRequestException,
     401: UnauthorizedException,
     402: PaymentRequiredException,
