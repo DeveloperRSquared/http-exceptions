@@ -1,12 +1,8 @@
 name: Deploy
 on:
-  pull_request:
-    branches:
-      - main
-# on:
-#   push:
-#     tags:
-#       - "v*"
+  push:
+    tags:
+      - "v*"
 
 defaults:
   run:
@@ -54,19 +50,15 @@ jobs:
           docker run --name ${CONTAINER_NAME} --rm --detach --volume $(pwd)/setup.py:/app/setup.py --volume $(pwd)/.pypirc:/root/.pypirc --volume $(pwd)/../README.md:/README.md --entrypoint sleep ${DOCKER_IMAGE} 600
           docker exec ${CONTAINER_NAME} python setup.py bdist_wheel
           docker exec ${CONTAINER_NAME} twine check 'dist/*'
-          # docker exec ${CONTAINER_NAME} twine upload --config-file /root/.pypirc --non-interactive --disable-progress-bar dist/*
+          docker exec ${CONTAINER_NAME} twine upload --config-file /root/.pypirc --non-interactive --disable-progress-bar dist/*
           docker stop ${CONTAINER_NAME}
 
-  # create-release:
-  #   needs: deploy
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Create Release
-  #       uses: actions/create-release@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         tag_name: ${{ github.ref }}
-  #         release_name: Release ${{ github.ref }}
-  #         draft: false
-  #         prerelease: false
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
