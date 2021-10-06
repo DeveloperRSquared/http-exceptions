@@ -1,8 +1,12 @@
 name: Deploy
 on:
-  push:
+  pull_request:
     branches:
       - main
+# on:
+#   push:
+#     tags:
+#       - "v*"
 
 defaults:
   run:
@@ -20,20 +24,42 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Build
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Check package version == tag
+        run: |
+          version=$(python setup.py --version)
+          if [ "${{ github.ref }}" != "refs/tags/v${version}" ]; then
+            echo "Version in setup.py: (v${version}) is different to the tag: (${{ github.ref }})."
+            exit 1;
+          fi
+
+      - name: Build docker image
         run: docker build --tag ${DOCKER_IMAGE} .
 
-      - name: Check code style (black)
-        run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m black --config /app/pyproject.toml --check .
+      - name: Publish package to PyPI
+        run: |
+          CONTAINER_NAME=http-exceptions
+          sed -i -e "s/\${PYPI_TOKEN}/${{ secrets.PYPI_TOKEN }}/" .pypirc
+          docker run --name ${CONTAINER_NAME} --rm --detach --volume $(pwd)/setup.py:/app/setup.py --volume $(pwd)/.pypirc:/root/.pypirc --volume $(pwd)/../README.md:/README.md --entrypoint sleep ${DOCKER_IMAGE} 600
+          docker exec ${CONTAINER_NAME} python setup.py bdist_wheel
+          docker exec ${CONTAINER_NAME} twine check 'dist/*'
+          # docker exec ${CONTAINER_NAME} twine upload --config-file /root/.pypirc --non-interactive --disable-progress-bar dist/*
+          docker stop ${CONTAINER_NAME}
 
-      - name: Check code style (flake8)
-        run: docker run --rm --volume $(pwd)/.flake8:/app/.flake8 --env CI=true --entrypoint python ${DOCKER_IMAGE} -m flake8 --config /app/.flake8
-
-      - name: Check lint (pylint)
-        run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pylint --rcfile /app/pyproject.toml http_exceptions tests
-
-      - name: Check typing (mypy)
-        run: docker run --rm --volume $(pwd)/mypy.ini:/app/mypy.ini --env CI=true --entrypoint python ${DOCKER_IMAGE} -m mypy --config-file /app/mypy.ini http_exceptions tests
-
-      - name: Run tests (pytest)
-        run: docker run --rm --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pytest --capture=no --log-cli-level=INFO
+  # create-release:
+  #   needs: deploy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Create Release
+  #       uses: actions/create-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         tag_name: ${{ github.ref }}
+  #         release_name: Release ${{ github.ref }}
+  #         draft: false
+  #         prerelease: false
