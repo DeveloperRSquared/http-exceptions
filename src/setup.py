@@ -9,7 +9,7 @@ from http_exceptions import __version__
 setup_directory = Path(__file__).absolute().parent
 
 requirements = []
-with open(os.path.join(setup_directory, 'requirements.txt'), 'r') as requirements_file:
+with open(file=os.path.join(setup_directory, 'requirements.txt'), mode='r', encoding='utf-8') as requirements_file:
     for requirement in requirements_file.read().splitlines():
         if requirement:
             requirements.append(requirement)
@@ -21,6 +21,7 @@ setup(
     name='http-exceptions',
     version=__version__,
     description="HTTP Exceptions built on FastAPI's HTTPException",
+    long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/DeveloperRSquared/http-exceptions/',
     author='rikhilrai',
