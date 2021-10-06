@@ -1,8 +1,14 @@
+from typing import Mapping
+from typing import Type
+from typing import Union
+
 import pytest
 
 from http_exceptions.client_exceptions import CLIENT_EXCEPTIONS
+from http_exceptions.client_exceptions import ClientException
 from http_exceptions.http_exception import HTTPException
 from http_exceptions.server_exceptions import SERVER_EXCEPTIONS
+from http_exceptions.server_exceptions import ServerException
 
 
 class TestHttpException:
@@ -10,17 +16,17 @@ class TestHttpException:
     server_error_status_codes = [500, 501, 502, 503, 504, 505, 506, 507, 508, 510, 511]
     all_error_status_codes = client_error_status_codes + server_error_status_codes
 
+    all_exceptions: Mapping[int, Type[Union[ClientException, ServerException]]] = {**CLIENT_EXCEPTIONS, **SERVER_EXCEPTIONS}
+
     # check all status codes are mapped
     def test_status_codes(self) -> None:
-        error_status_codes = {*CLIENT_EXCEPTIONS.keys(), *SERVER_EXCEPTIONS.keys()}
-        assert error_status_codes == set(self.all_error_status_codes)
+        assert set(self.all_exceptions.keys()) == set(self.all_error_status_codes)
 
     # check from_status returns the expected exception for all status codes
     def test_from_status(self) -> None:
-        all_exceptions = {**CLIENT_EXCEPTIONS, **SERVER_EXCEPTIONS}
         for status_code in self.all_error_status_codes:
             http_exception = HTTPException.from_status(status_code=status_code)
-            assert isinstance(http_exception, all_exceptions[status_code])
+            assert isinstance(http_exception, self.all_exceptions[status_code])
 
     # check that from_status raises a ValueError if passed an invalid status
     def test_invalid_status(self) -> None:  # pylint: disable=no-self-use
