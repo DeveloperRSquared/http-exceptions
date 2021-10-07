@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from typing import List
 
 from setuptools import find_packages
 from setuptools import setup
@@ -8,11 +9,17 @@ from http_exceptions import __version__
 
 setup_directory = Path(__file__).absolute().parent
 
-requirements = []
+requirements: List[str] = []
 with open(file=os.path.join(setup_directory, 'requirements.txt'), mode='r', encoding='utf-8') as requirements_file:
     for requirement in requirements_file.read().splitlines():
         if requirement:
             requirements.append(requirement)
+
+test_requirements: List[str] = []
+with open(file=os.path.join(setup_directory, 'requirements.dev.txt'), mode='r', encoding='utf-8') as requirements_test_file:
+    for requirement in requirements_test_file.read().splitlines():
+        if requirement:
+            test_requirements.append(requirement)
 
 with open(file=str(setup_directory.parent / 'README.md'), mode='r', encoding='utf-8') as file:
     long_description = file.read()
@@ -28,11 +35,11 @@ setup(
     author_email='developerrsquared@gmail.com',
     packages=find_packages(exclude=['tests*']),
     license='MIT LICENSE',
-    python_requires='~=3.7',
+    python_requires='>=3.7',
     install_requires=requirements,
-    tests_require=[],
+    tests_require=test_requirements,
     package_data={
-        'http-exceptions': [
+        'http_exceptions': [
             'py.typed',
         ]
     },
