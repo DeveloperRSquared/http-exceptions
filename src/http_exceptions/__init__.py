@@ -1,4 +1,4 @@
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 from .client_exceptions import BadRequestException
 from .client_exceptions import ClientException
