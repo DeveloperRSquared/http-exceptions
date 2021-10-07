@@ -12,7 +12,7 @@ class HTTPException(FastAPIHTTPException):
         return self.__repr__()
 
     @staticmethod
-    def from_status(status_code: int) -> HTTPException:
+    def from_status_code(status_code: int) -> HTTPException:
         from .client_exceptions import CLIENT_EXCEPTIONS
         from .client_exceptions import TYPE_CLIENT_EXCEPTIONS
         from .server_exceptions import SERVER_EXCEPTIONS
