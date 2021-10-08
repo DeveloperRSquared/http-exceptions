@@ -30,6 +30,13 @@ exclude = '''
 )/
 '''
 
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--capture=no --log-cli-level=INFO"
+testpaths = [
+    "tests",
+]
+
 [tool.pylint.master]
 ignore = [
   "CVS",
