@@ -1,8 +1,7 @@
+import inspect
 from typing import Mapping
 from typing import Type
 from typing import Union
-
-import pytest
 
 from http_exceptions.client_exceptions import CLIENT_EXCEPTIONS
 from http_exceptions.client_exceptions import ClientException
@@ -26,10 +25,10 @@ class TestHttpException:
     def test_from_status(self) -> None:
         for status_code in self.all_error_status_codes:
             http_exception = HTTPException.from_status_code(status_code=status_code)
-            assert isinstance(http_exception, self.all_exceptions[status_code])
+            assert inspect.isclass(http_exception) and http_exception == self.all_exceptions[status_code]
 
     # check that from_status_code raises a ValueError if passed an invalid status
     def test_invalid_status(self) -> None:  # pylint: disable=no-self-use
         invalid_status_code = 0
-        with pytest.raises(ValueError):
-            HTTPException.from_status_code(status_code=invalid_status_code)
+        http_exception = HTTPException.from_status_code(status_code=invalid_status_code)
+        assert inspect.isclass(http_exception) and http_exception == HTTPException

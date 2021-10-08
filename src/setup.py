@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 from typing import List
 
@@ -9,17 +8,17 @@ from http_exceptions import __version__
 
 setup_directory = Path(__file__).absolute().parent
 
-requirements: List[str] = []
-with open(file=os.path.join(setup_directory, 'requirements.txt'), mode='r', encoding='utf-8') as requirements_file:
-    for requirement in requirements_file.read().splitlines():
-        if requirement:
-            requirements.append(requirement)
 
-test_requirements: List[str] = []
-with open(file=os.path.join(setup_directory, 'requirements.dev.txt'), mode='r', encoding='utf-8') as requirements_test_file:
-    for requirement in requirements_test_file.read().splitlines():
-        if requirement:
-            test_requirements.append(requirement)
+def parse_requirements(requirements_file: str) -> List[str]:
+    if not Path(requirements_file).is_file():
+        raise Exception(f'Invalid file: {requirements_file!r} passed to parse_requirements. File does not exist.')
+    requirements: List[str] = []
+    with open(file=requirements_file, mode='r', encoding='utf-8') as reqs_file:
+        for requirement in reqs_file.read().splitlines():
+            if requirement:
+                requirements.append(requirement)
+    return requirements
+
 
 with open(file=str(setup_directory.parent / 'README.md'), mode='r', encoding='utf-8') as file:
     long_description = file.read()
@@ -27,7 +26,7 @@ with open(file=str(setup_directory.parent / 'README.md'), mode='r', encoding='ut
 setup(
     name='http-exceptions',
     version=__version__,
-    description="HTTP Exceptions built on FastAPI's HTTPException",
+    description="HTTP Exceptions",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/DeveloperRSquared/http-exceptions/',
@@ -36,8 +35,8 @@ setup(
     packages=find_packages(exclude=['tests*']),
     license='MIT LICENSE',
     python_requires='>=3.7',
-    install_requires=requirements,
-    tests_require=test_requirements,
+    install_requires=parse_requirements(requirements_file=str(Path(setup_directory) / 'requirements.txt')),
+    tests_require=parse_requirements(requirements_file=str(Path(setup_directory) / 'requirements.dev.txt')),
     package_data={
         'http_exceptions': [
             'py.typed',
@@ -46,8 +45,11 @@ setup(
     test_suite='tests',
     include_package_data=True,
     extras_require={},
+    keywords=['http', 'exceptions', 'fastapi', 'api', 'web', 'rest', 'python'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development :: Build Tools',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
