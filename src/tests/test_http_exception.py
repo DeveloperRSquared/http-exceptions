@@ -63,11 +63,12 @@ class TestFromStatusCode(HttpExceptionTestCase):
             message = 'HTTP Exception'
             http_exception = http_exception_cls(message=message)
             assert isinstance(http_exception, HTTPException)
+            assert type(http_exception) is self.all_exception_classes[status_code]  # pylint: disable=unidiomatic-typecheck
             assert http_exception.status_code == status_code
             assert http_exception.message == message
 
     # check that from_status_code returns a HTTPException when the status_code doesn't match one of the client/server exceptions
-    def test_invalid_status(self) -> None:  # pylint: disable=no-self-use
+    def test_invalid_status_code(self) -> None:  # pylint: disable=no-self-use
         invalid_status_code = 0
         http_exception_cls = HTTPException.from_status_code(status_code=invalid_status_code)
         assert isinstance(http_exception_cls, partial)
@@ -75,8 +76,35 @@ class TestFromStatusCode(HttpExceptionTestCase):
         message = 'HTTP Exception'
         http_exception = http_exception_cls(message=message)
         assert isinstance(http_exception, HTTPException)
+        assert type(http_exception) is HTTPException  # pylint: disable=unidiomatic-typecheck
         assert http_exception.status_code == invalid_status_code
         assert http_exception.message == message
+
+    # check that from_status_code returns a HTTPException when the status_code is that of an unrecognized client exception
+    def test_invalid_client_status_code(self) -> None:  # pylint: disable=no-self-use
+        invalid_status_code = 499
+        client_exception_cls = HTTPException.from_status_code(status_code=invalid_status_code)
+        assert isinstance(client_exception_cls, partial)
+        assert client_exception_cls.keywords['status_code'] == invalid_status_code
+        message = 'Client Exception'
+        client = client_exception_cls(message=message)
+        assert isinstance(client, HTTPException)
+        assert type(client) is ClientException  # pylint: disable=unidiomatic-typecheck
+        assert client.status_code == invalid_status_code
+        assert client.message == message
+
+    # check that from_status_code returns a HTTPException when the status_code is that of an unrecognized server exception
+    def test_invalid_server_status_code(self) -> None:  # pylint: disable=no-self-use
+        invalid_status_code = 599
+        server_exception_cls = HTTPException.from_status_code(status_code=invalid_status_code)
+        assert isinstance(server_exception_cls, partial)
+        assert server_exception_cls.keywords['status_code'] == invalid_status_code
+        message = 'HTTP Exception'
+        server_exception = server_exception_cls(message=message)
+        assert isinstance(server_exception, HTTPException)
+        assert type(server_exception) is ServerException  # pylint: disable=unidiomatic-typecheck
+        assert server_exception.status_code == invalid_status_code
+        assert server_exception.message == message
 
 
 class TestCatch(HttpExceptionTestCase):
