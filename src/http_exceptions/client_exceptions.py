@@ -97,7 +97,7 @@ class PayloadTooLargeException(ClientException):
         super().__init__(status_code=413, message=message)
 
 
-class UriTooLongException(ClientException):
+class URITooLongException(ClientException):
     def __init__(self, message: Optional[str] = None) -> None:
         message = message if message else 'URI Too Long'
         super().__init__(status_code=414, message=message)
@@ -209,7 +209,7 @@ TYPE_CLIENT_EXCEPTIONS = Type[  # pylint: disable=invalid-name
         LengthRequiredException,
         PreconditionFailedException,
         PayloadTooLargeException,
-        UriTooLongException,
+        URITooLongException,
         UnsupportedMediaTypeException,
         RangeNotSatisfiableException,
         ExpectationFailedException,
@@ -243,7 +243,7 @@ CLIENT_EXCEPTIONS: Mapping[int, TYPE_CLIENT_EXCEPTIONS] = {
     411: LengthRequiredException,
     412: PreconditionFailedException,
     413: PayloadTooLargeException,
-    414: UriTooLongException,
+    414: URITooLongException,
     415: UnsupportedMediaTypeException,
     416: RangeNotSatisfiableException,
     417: ExpectationFailedException,
