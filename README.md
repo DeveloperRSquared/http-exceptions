@@ -40,6 +40,7 @@ Raisable HTTP Exceptions
 422: UnprocessableEntityException
 423: LockedException
 424: FailedDependencyException
+425: TooEarlyException
 426: UpgradeRequiredException
 428: PreconditionRequiredException
 429: TooManyRequestsException

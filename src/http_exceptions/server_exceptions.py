@@ -45,7 +45,7 @@ class GatewayTimeoutException(ServerException):
 
 class HttpVersionNotSupportedException(ServerException):
     def __init__(self, message: Optional[str] = None) -> None:
-        message = message if message else 'Http Version Not Supported'
+        message = message if message else 'HTTP Version Not Supported'
         super().__init__(status_code=505, message=message)
 
 

@@ -1,5 +1,5 @@
 # isort: skip_file
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 from .http_exception import HTTPException
 
@@ -27,6 +27,7 @@ from .client_exceptions import MisdirectedRequestException
 from .client_exceptions import UnprocessableEntityException
 from .client_exceptions import LockedException
 from .client_exceptions import FailedDependencyException
+from .client_exceptions import TooEarlyException
 from .client_exceptions import UpgradeRequiredException
 from .client_exceptions import PreconditionRequiredException
 from .client_exceptions import TooManyRequestsException
