@@ -40,6 +40,7 @@ Raisable HTTP Exceptions
 422: UnprocessableEntityException
 423: LockedException
 424: FailedDependencyException
+425: TooEarlyException
 426: UpgradeRequiredException
 428: PreconditionRequiredException
 429: TooManyRequestsException
@@ -49,13 +50,14 @@ Raisable HTTP Exceptions
 ```
 
 #### Server Exceptions
+
 ```py
 500: InternalServerErrorException
 501: NotImplementedException
 502: BadGatewayException
 503: ServiceUnavailableException
 504: GatewayTimeoutException
-505: HttpVersionNotSupportedException
+505: HTTPVersionNotSupportedException
 506: VariantAlsoNegotiatesException
 507: InsufficientStorageException
 508: LoopDetectedException

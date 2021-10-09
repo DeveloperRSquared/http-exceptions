@@ -43,9 +43,9 @@ class GatewayTimeoutException(ServerException):
         super().__init__(status_code=504, message=message)
 
 
-class HttpVersionNotSupportedException(ServerException):
+class HTTPVersionNotSupportedException(ServerException):
     def __init__(self, message: Optional[str] = None) -> None:
-        message = message if message else 'Http Version Not Supported'
+        message = message if message else 'HTTP Version Not Supported'
         super().__init__(status_code=505, message=message)
 
 
@@ -86,7 +86,7 @@ TYPE_SERVER_EXCEPTIONS = Type[  # pylint: disable=invalid-name
         BadGatewayException,
         ServiceUnavailableException,
         GatewayTimeoutException,
-        HttpVersionNotSupportedException,
+        HTTPVersionNotSupportedException,
         VariantAlsoNegotiatesException,
         InsufficientStorageException,
         LoopDetectedException,
@@ -101,7 +101,7 @@ SERVER_EXCEPTIONS: Mapping[int, TYPE_SERVER_EXCEPTIONS] = {
     502: BadGatewayException,
     503: ServiceUnavailableException,
     504: GatewayTimeoutException,
-    505: HttpVersionNotSupportedException,
+    505: HTTPVersionNotSupportedException,
     506: VariantAlsoNegotiatesException,
     507: InsufficientStorageException,
     508: LoopDetectedException,

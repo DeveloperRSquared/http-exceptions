@@ -123,7 +123,7 @@ class ExpectationFailedException(ClientException):
 
 class ImATeapotException(ClientException):
     def __init__(self, message: Optional[str] = None) -> None:
-        message = message if message else 'This server is a teapot, not a coffee machine'
+        message = message if message else "I'm a teapot"
         super().__init__(status_code=418, message=message)
 
 
@@ -149,6 +149,12 @@ class FailedDependencyException(ClientException):
     def __init__(self, message: Optional[str] = None) -> None:
         message = message if message else 'Failed Dependency'
         super().__init__(status_code=424, message=message)
+
+
+class TooEarlyException(ClientException):
+    def __init__(self, message: Optional[str] = None) -> None:
+        message = message if message else 'Too Early'
+        super().__init__(status_code=425, message=message)
 
 
 class UpgradeRequiredException(ClientException):
@@ -212,6 +218,7 @@ TYPE_CLIENT_EXCEPTIONS = Type[  # pylint: disable=invalid-name
         UnprocessableEntityException,
         LockedException,
         FailedDependencyException,
+        TooEarlyException,
         UpgradeRequiredException,
         PreconditionRequiredException,
         TooManyRequestsException,
@@ -245,6 +252,7 @@ CLIENT_EXCEPTIONS: Mapping[int, TYPE_CLIENT_EXCEPTIONS] = {
     422: UnprocessableEntityException,
     423: LockedException,
     424: FailedDependencyException,
+    425: TooEarlyException,
     426: UpgradeRequiredException,
     428: PreconditionRequiredException,
     429: TooManyRequestsException,
