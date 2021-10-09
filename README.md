@@ -50,13 +50,14 @@ Raisable HTTP Exceptions
 ```
 
 #### Server Exceptions
+
 ```py
 500: InternalServerErrorException
 501: NotImplementedException
 502: BadGatewayException
 503: ServiceUnavailableException
 504: GatewayTimeoutException
-505: HttpVersionNotSupportedException
+505: HTTPVersionNotSupportedException
 506: VariantAlsoNegotiatesException
 507: InsufficientStorageException
 508: LoopDetectedException

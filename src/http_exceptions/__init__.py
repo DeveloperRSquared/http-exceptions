@@ -41,7 +41,7 @@ from .server_exceptions import NotImplementedException
 from .server_exceptions import BadGatewayException
 from .server_exceptions import ServiceUnavailableException
 from .server_exceptions import GatewayTimeoutException
-from .server_exceptions import HttpVersionNotSupportedException
+from .server_exceptions import HTTPVersionNotSupportedException
 from .server_exceptions import VariantAlsoNegotiatesException
 from .server_exceptions import InsufficientStorageException
 from .server_exceptions import LoopDetectedException
