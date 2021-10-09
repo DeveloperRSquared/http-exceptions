@@ -12,9 +12,93 @@
 
 Raisable HTTP Exceptions
 
+## What is it good for?
+
+It converts this:
+
+```py
+# e.g. app/internal.py
+def some_function():
+    raise SomeError()
+
+# e.g. app/api.py
+def api(request):
+   try:
+       response = some_function()
+   except SomeError:
+       response = Response(status_code=403)
+   return response
+```
+
+into this:
+
+```py
+# e.g. app/internal.py
+from http_exceptions import HTTPException
+
+def some_function():
+    raise HTTPException.from_status_code(status_code=403)  # Forbidden
+
+# e.g. app/api.py
+def api(request):
+    return some_function()
+```
+
+saving you from writing out boilerplate code.
+
+## Install http-exceptions
+
+Simply install the package from [PyPI](pypi.org/project/http-exceptions/).
+
+```bash
+pip install -U http-exceptions
+```
+
+And that is it, you are ready to raise HTTP Exceptions.
+
+## What else?
+
+### `HTTPException`
+
+Base class that provides all the exceptions to be raised.
+
+### `HTTPExceptions.from_status_code(status_code)`
+
+Returns the relevant Exception corresponding to status: `status_code`
+
+e.g. `HTTPExceptions.from_status_code(status_code=431)` -> `RequestHeaderFieldsTooLargeException`
+
+### `ClientException`
+
+Subclass of `HTTPException` serving as a base class for exceptions with statuses in the [400, 499] range.
+
+```py
+from http_exceptions import ClientException
+
+try:
+    raise RequestHeaderFieldsTooLargeException
+except ClientException:
+    # exception is caught here
+    pass
+```
+
+### `ServerException`
+
+Subclass of `HTTPException` serving as a base class for exceptions with statuses in the [500, 599] range.
+
+```py
+from http_exceptions import ServerException
+
+try:
+    raise HTTPVersionNotSupportedException
+except ServerException:
+    # exception is caught here
+    pass
+```
+
 ## Available Exceptions
 
-#### Client Exceptions
+### Client Exceptions: `400 <= status <= 499`
 
 ```py
 400: BadRequestException
@@ -49,7 +133,7 @@ Raisable HTTP Exceptions
 451: UnavailableForLegalReasonsException
 ```
 
-#### Server Exceptions
+### Server Exceptions: `500 <= status <= 599`
 
 ```py
 500: InternalServerErrorException
