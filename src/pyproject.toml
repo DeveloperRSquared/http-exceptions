@@ -83,3 +83,24 @@ ignored-modules = [
   "alembic.op",
   "alembic.context",
 ]
+
+[tool.mypy]
+[mypy]
+ignore_missing_imports = true
+disallow_untyped_defs = true
+
+# Warnings
+warn_return_any = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unreachable = true
+
+# Miscellaneous
+strict_equality = true
+
+# Error messages
+show_error_context = true
+show_column_numbers = true
+show_error_codes = true
+# pretty = true
+# show_absolute_path = true
