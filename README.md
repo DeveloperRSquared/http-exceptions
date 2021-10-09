@@ -31,7 +31,7 @@ Raisable HTTP Exceptions
 411: LengthRequiredException
 412: PreconditionFailedException
 413: PayloadTooLargeException
-414: UriTooLongException
+414: URITooLongException
 415: UnsupportedMediaTypeException
 416: RangeNotSatisfiableException
 417: ExpectationFailedException

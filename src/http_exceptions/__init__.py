@@ -18,7 +18,7 @@ from .client_exceptions import GoneException
 from .client_exceptions import LengthRequiredException
 from .client_exceptions import PreconditionFailedException
 from .client_exceptions import PayloadTooLargeException
-from .client_exceptions import UriTooLongException
+from .client_exceptions import URITooLongException
 from .client_exceptions import UnsupportedMediaTypeException
 from .client_exceptions import RangeNotSatisfiableException
 from .client_exceptions import ExpectationFailedException
