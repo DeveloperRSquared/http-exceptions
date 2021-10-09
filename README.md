@@ -3,7 +3,7 @@
 [![Build](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/build.yml/badge.svg)](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/build.yml)
 [![Deploy](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/deploy.yml/badge.svg)](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/deploy.yml)
 
-[![Python 3.7+](https://img.shields.io/badge/python-3.7+-brightgreen.svg)](#)
+[![Python 3.7+](https://img.shields.io/badge/python-3.7+-brightgreen.svg)](#http-exceptions)
 [![PyPI - License](https://img.shields.io/pypi/l/http-exceptions.svg)](https://pypi.org/project/http-exceptions/)
 
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
@@ -63,7 +63,7 @@ Raisable HTTP Exceptions
 
 Simply install the package from [PyPI](pypi.org/project/http-exceptions/).
 
-```bash
+```sh
 pip install -U http-exceptions
 ```
 
@@ -86,7 +86,7 @@ e.g. `HTTPExceptions.from_status_code(status_code=431)` -> `RequestHeaderFieldsT
 Subclass of `HTTPException` serving as a base class for exceptions with statuses in the [400, 499] range.
 
 ```py
-from http_exceptions import ClientException
+from http_exceptions import ClientException, RequestHeaderFieldsTooLargeException
 
 try:
     raise RequestHeaderFieldsTooLargeException
@@ -100,7 +100,7 @@ except ClientException:
 Subclass of `HTTPException` serving as a base class for exceptions with statuses in the [500, 599] range.
 
 ```py
-from http_exceptions import ServerException
+from http_exceptions import HTTPVersionNotSupportedException, ServerException
 
 try:
     raise HTTPVersionNotSupportedException
