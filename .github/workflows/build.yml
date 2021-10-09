@@ -61,7 +61,7 @@ jobs:
         run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pylint --rcfile /app/pyproject.toml http_exceptions tests
 
       - name: Check typing (mypy)
-        run: docker run --rm --volume $(pwd)/mypy.ini:/app/mypy.ini --env CI=true --entrypoint python ${DOCKER_IMAGE} -m mypy --config-file /app/mypy.ini http_exceptions tests
+        run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m mypy --config-file /app/pyproject.toml http_exceptions tests
 
       - name: Run tests (pytest)
         run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m pytest -c /app/pyproject.toml

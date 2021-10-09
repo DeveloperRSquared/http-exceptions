@@ -63,4 +63,4 @@ repos:
         exclude: ^.*\b(migrations)\b.*$
         additional_dependencies:
           - 'pydantic'
-        args: [ '--config-file', 'src/mypy.ini' ]
+        args: [ '--config-file', 'src/pyproject.toml' ]
