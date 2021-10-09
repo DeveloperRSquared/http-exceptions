@@ -14,37 +14,48 @@ Raisable HTTP Exceptions
 
 ## What is it good for?
 
-It converts this:
+1. Save writing boilerplate code:
 
-```py
-# e.g. app/internal.py
-def some_function():
-    raise SomeError()
+    ```py
+    # e.g. app/internal.py
+    def some_function() -> None:
+        raise SomeError()
 
-# e.g. app/api.py
-def api(request):
-   try:
-       response = some_function()
-   except SomeError:
-       response = Response(status_code=403)
-   return response
-```
+    # e.g. app/api.py
+    def api(request: Request) -> Response:
+    try:
+        response = some_function()
+    except SomeError:
+        response = Response(status_code=403)
+    return response
+    ```
 
-into this:
+    into this:
 
-```py
-# e.g. app/internal.py
-from http_exceptions import HTTPException
+    ```py
+    # e.g. app/internal.py
+    from http_exceptions import HTTPException
 
-def some_function():
-    raise HTTPException.from_status_code(status_code=403)  # Forbidden
+    def some_function():
+        raise ForbiddenException()
 
-# e.g. app/api.py
-def api(request):
-    return some_function()
-```
+    # e.g. app/api.py
+    def api(request):
+        return some_function()
+    ```
 
-saving you from writing out boilerplate code.
+2. Dynamic exception raising:
+
+    ```py
+    from http_exceptions import HTTPException
+
+    def raise_from_status(response: Response) -> None
+        if 400 <= response.status < 600:
+            raise HTTPException.from_status_code(status_code=response.status)(message=response.text)
+
+    >>> response = Response(status_code=403)
+    >>> raise_from_status(response=response)  # ForbiddenException raised
+    ```
 
 ## Install http-exceptions
 
@@ -64,7 +75,7 @@ Base class that provides all the exceptions to be raised.
 
 ### `HTTPExceptions.from_status_code(status_code)`
 
-Returns the relevant Exception corresponding to status: `status_code`
+Returns the relevant Exception corresponding to `status_code`
 
 e.g. `HTTPExceptions.from_status_code(status_code=431)` -> `RequestHeaderFieldsTooLargeException`
 
