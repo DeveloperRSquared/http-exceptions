@@ -16,46 +16,48 @@ Raisable HTTP Exceptions
 
 1. Save writing boilerplate code:
 
-    ```py
-    # e.g. app/internal.py
-    def some_function() -> None:
-        raise SomeError()
+   Converts this:
 
-    # e.g. app/api.py
-    def api(request: Request) -> Response:
-    try:
-        response = some_function()
-    except SomeError:
-        response = Response(status_code=403)
-    return response
-    ```
+   ```py
+   # e.g. app/internal.py
+   def some_function() -> None:
+       raise SomeError()
 
-    into this:
+   # e.g. app/api.py
+   def api(request: Request) -> Response:
+       try:
+           response = some_function()
+       except SomeError:
+           response = Response(status_code=403)
+       return response
+   ```
 
-    ```py
-    # e.g. app/internal.py
-    from http_exceptions import HTTPException
+   into this:
 
-    def some_function():
-        raise ForbiddenException()
+   ```py
+   # e.g. app/internal.py
+   from http_exceptions import ForbiddenException
 
-    # e.g. app/api.py
-    def api(request):
-        return some_function()
-    ```
+   def some_function() -> None:
+       raise ForbiddenException()
+
+   # e.g. app/api.py
+   def api(request: Request) -> None:
+       return some_function()
+   ```
 
 2. Dynamic exception raising:
 
-    ```py
-    from http_exceptions import HTTPException
+   ```py
+   from http_exceptions import HTTPException
 
-    def raise_from_status(response: Response) -> None
-        if 400 <= response.status < 600:
-            raise HTTPException.from_status_code(status_code=response.status)(message=response.text)
+   def raise_from_status(response: Response) -> None:
+       if 400 <= response.status < 600:
+           raise HTTPException.from_status_code(status_code=response.status)(message=response.text)
 
-    >>> response = Response(status_code=403)
-    >>> raise_from_status(response=response)  # ForbiddenException raised
-    ```
+   >>> response = Response(status_code=403)
+   >>> raise_from_status(response=response)  # ForbiddenException raised
+   ```
 
 ## Install http-exceptions
 
