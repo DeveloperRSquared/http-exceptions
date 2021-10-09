@@ -123,7 +123,7 @@ class ExpectationFailedException(ClientException):
 
 class ImATeapotException(ClientException):
     def __init__(self, message: Optional[str] = None) -> None:
-        message = message if message else "I'm a teapot"
+        message = message if message else 'This server is a teapot, not a coffee machine'
         super().__init__(status_code=418, message=message)
 
 
