@@ -14,7 +14,7 @@ Raisable HTTP Exceptions
 
 ## What is it good for?
 
-1. Save writing boilerplate code:
+1. Saves writing boilerplate code:
 
    Converts this:
 
@@ -54,14 +54,16 @@ Raisable HTTP Exceptions
    def raise_from_status(response: Response) -> None:
        if 400 <= response.status < 600:
            raise HTTPException.from_status_code(status_code=response.status)(message=response.text)
+   ```
 
+   ```py
    >>> response = Response(status_code=403)
    >>> raise_from_status(response=response)  # ForbiddenException raised
    ```
 
 ## Install http-exceptions
 
-Simply install the package from [PyPI](pypi.org/project/http-exceptions/).
+Simply install the package from [PyPI](https://pypi.org/project/http-exceptions/).
 
 ```sh
 pip install -U http-exceptions
@@ -89,7 +91,7 @@ Subclass of `HTTPException` serving as a base class for exceptions with statuses
 from http_exceptions import ClientException, RequestHeaderFieldsTooLargeException
 
 try:
-    raise RequestHeaderFieldsTooLargeException
+    raise RequestHeaderFieldsTooLargeException  # 431 - Client exception
 except ClientException:
     # exception is caught here
     pass
@@ -103,7 +105,7 @@ Subclass of `HTTPException` serving as a base class for exceptions with statuses
 from http_exceptions import HTTPVersionNotSupportedException, ServerException
 
 try:
-    raise HTTPVersionNotSupportedException
+    raise HTTPVersionNotSupportedException  # 505 - Server exception
 except ServerException:
     # exception is caught here
     pass

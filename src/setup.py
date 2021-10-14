@@ -26,7 +26,7 @@ with open(file=str(setup_directory.parent / 'README.md'), mode='r', encoding='ut
 setup(
     name='http-exceptions',
     version=__version__,
-    description="HTTP Exceptions",
+    description="Raisable HTTP Exceptions",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/DeveloperRSquared/http-exceptions/',
@@ -61,6 +61,10 @@ setup(
         'Typing :: Typed',
     ],
     project_urls={
+        'Documentation': 'https://github.com/DeveloperRSquared/http-exceptions#http-exceptions',
+        'Funding': 'https://www.paypal.com/paypalme/rikhilrai',
         'Repository': 'https://github.com/DeveloperRSquared/http-exceptions/',
+        'Source': 'https://github.com/DeveloperRSquared/http-exceptions/',
+        'Tracker': 'https://github.com/DeveloperRSquared/http-exceptions/issues',
     },
 )
