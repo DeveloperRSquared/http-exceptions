@@ -51,6 +51,12 @@ jobs:
       - name: Build
         run: docker build --tag ${DOCKER_IMAGE} .
 
+      - name: Check import sort (isort)
+        run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m isort --settings-file /app/pyproject.toml --check .
+
+      - name: Check unused imports & variables (autoflake)
+        run: docker run --rm --env CI=true --entrypoint python ${DOCKER_IMAGE} -m autoflake --check --in-place --remove-unused-variable --remove-all-unused-imports --expand-star-imports --ignore-init-module-imports --recursive .
+
       - name: Check code style (black)
         run: docker run --rm --volume $(pwd)/pyproject.toml:/app/pyproject.toml --env CI=true --entrypoint python ${DOCKER_IMAGE} -m black --config /app/pyproject.toml --check .
 

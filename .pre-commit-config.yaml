@@ -21,23 +21,23 @@ repos:
       - id: requirements-txt-fixer
       - id: trailing-whitespace
   - repo: https://github.com/pycqa/isort
-    rev: 5.8.0
+    rev: 5.10.1
     hooks:
       - id: isort
         args: [ '--settings-file', 'src/pyproject.toml' ]
-  - repo: https://github.com/humitos/mirrors-autoflake.git
-    rev: v1.3
+  - repo: https://github.com/myint/autoflake.git
+    rev: v1.4
     hooks:
       - id: autoflake
         args: [ '--in-place', '--remove-unused-variable', '--remove-all-unused-imports', '--expand-star-imports', '--ignore-init-module-imports' ]
   - repo: https://github.com/psf/black
-    rev: 21.9b0
+    rev: 21.10b0
     hooks:
       - id: black
         language_version: python3
         args: [ '--config', 'src/pyproject.toml' ]
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.9.2
+    rev: 4.0.1
     hooks:
       - id: flake8
         args: [ '--config', 'src/.flake8' ]
