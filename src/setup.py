@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List
 
-from setuptools import find_packages
+from setuptools import find_packages  # type: ignore[import]
 from setuptools import setup
 
 from http_exceptions import __version__
