@@ -15,7 +15,7 @@ def parse_requirements(requirements_file: str) -> List[str]:
     requirements: List[str] = []
     with open(file=requirements_file, mode='r', encoding='utf-8') as reqs_file:
         for requirement in reqs_file.read().splitlines():
-            if requirement:
+            if requirement and not requirement.startswith('--'):
                 requirements.append(requirement)
     return requirements
 
