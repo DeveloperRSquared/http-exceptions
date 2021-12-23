@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import List
 
-from setuptools import find_packages
+from setuptools import find_packages  # type: ignore[import]
 from setuptools import setup
 
 from http_exceptions import __version__
@@ -37,6 +37,7 @@ setup(
     python_requires='>=3.7',
     install_requires=parse_requirements(requirements_file=str(Path(setup_directory) / 'requirements.txt')),
     tests_require=parse_requirements(requirements_file=str(Path(setup_directory) / 'requirements.dev.txt')),
+    zip_safe=False,
     package_data={
         'http_exceptions': [
             'py.typed',
