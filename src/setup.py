@@ -43,6 +43,7 @@ setup(
             'py.typed',
         ]
     },
+    zip_safe=False,
     test_suite='tests',
     include_package_data=True,
     extras_require={},
