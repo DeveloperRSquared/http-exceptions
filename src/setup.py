@@ -37,7 +37,6 @@ setup(
     python_requires='>=3.7',
     install_requires=parse_requirements(requirements_file=str(Path(setup_directory) / 'requirements.txt')),
     tests_require=parse_requirements(requirements_file=str(Path(setup_directory) / 'requirements.dev.txt')),
-    zip_safe=False,
     package_data={
         'http_exceptions': [
             'py.typed',
