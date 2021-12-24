@@ -26,6 +26,11 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          if [[ -f requirements.txt ]]; then pip install --requirement requirements.txt; fi
+
       - name: Check package version == tag
         run: |
           version=$(python setup.py --version)
@@ -41,7 +46,7 @@ jobs:
         run: |
           CONTAINER_NAME=http-exceptions
           sed -i -e "s/\${PYPI_TOKEN}/${{ secrets.PYPI_TOKEN }}/" .pypirc
-          docker run --name ${CONTAINER_NAME} --rm --detach --volume $(pwd)/setup.py:${WORKDIR}/setup.py --volume $(pwd)/.pypirc:/root/.pypirc --volume $(pwd)/../README.md:/README.md --entrypoint sleep ${DOCKER_IMAGE} 600
+          docker run --name ${CONTAINER_NAME} --rm --detach --volume $(pwd)/setup.py:${WORKDIR}/setup.py --volume $(pwd)/.pypirc:/root/.pypirc --volume $(pwd)/../README.md:/README.md --entrypoint=sleep ${DOCKER_IMAGE} 600
           docker exec ${CONTAINER_NAME} python setup.py bdist_wheel
           docker exec ${CONTAINER_NAME} twine check 'dist/*'
           docker exec ${CONTAINER_NAME} twine upload --config-file /root/.pypirc --non-interactive --disable-progress-bar dist/*
