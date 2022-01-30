@@ -1,16 +1,28 @@
-# http-exceptions
+# HTTP Exceptions
 
-[![Build](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/build.yml/badge.svg)](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/build.yml)
-[![Deploy](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/deploy.yml/badge.svg)](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/deploy.yml)
+[![Publish](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/publish.yml/badge.svg)](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/publish.yml)
 
 [![Python 3.7+](https://img.shields.io/badge/python-3.7+-brightgreen.svg)](#http-exceptions)
-[![PyPI - License](https://img.shields.io/pypi/l/http-exceptions.svg)](https://pypi.org/project/http-exceptions/)
+[![PyPI - License](https://img.shields.io/pypi/l/http-exceptions.svg)](LICENSE)
+[![PyPI - Version](https://img.shields.io/pypi/v/http-exceptions.svg)](https://pypi.org/project/http-exceptions)
 
+[![codecov](https://codecov.io/gh/DeveloperRSquared/http-exceptions/branch/main/graph/badge.svg?token=8SJ30A2GV7)](https://codecov.io/gh/DeveloperRSquared/http-exceptions)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DeveloperRSquared/http-exceptions/main.svg)](https://results.pre-commit.ci/latest/github/DeveloperRSquared/http-exceptions/main)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 
 Raisable HTTP Exceptions
+
+## Install
+
+Simply install the package from [PyPI](https://pypi.org/project/http-exceptions/).
+
+```sh
+$ pip install -U http-exceptions
+```
+
+And that is it, you are ready to raise HTTP Exceptions.
 
 ## What is it good for?
 
@@ -53,7 +65,7 @@ Raisable HTTP Exceptions
 
    def raise_from_status(response: Response) -> None:
        if 400 <= response.status < 600:
-           raise HTTPException.from_status_code(status_code=response.status)(message=response.text)
+           raise HTTPException.from_status_code(status_code=response.status_code)(message=response.text)
    ```
 
    ```py
@@ -61,23 +73,13 @@ Raisable HTTP Exceptions
    >>> raise_from_status(response=response)  # ForbiddenException raised
    ```
 
-## Install http-exceptions
-
-Simply install the package from [PyPI](https://pypi.org/project/http-exceptions/).
-
-```sh
-pip install -U http-exceptions
-```
-
-And that is it, you are ready to raise HTTP Exceptions.
-
 ## What else?
 
 ### `HTTPException`
 
 Base class that provides all the exceptions to be raised.
 
-### `HTTPExceptions.from_status_code(status_code)`
+### `HTTPExceptions.from_status_code(status_code=status_code)`
 
 Returns the relevant Exception corresponding to `status_code`
 
@@ -164,6 +166,34 @@ except ServerException:
 511: NetworkAuthenticationRequiredException
 ```
 
-## License
+## Contributing
 
-This project is licensed under the terms of the [MIT license](./LICENSE).
+Contributions are welcome via pull requests.
+
+### First time setup
+
+```sh
+$ git clone git@github.com:DeveloperRSquared/http-exceptions.git
+$ cd http-exceptions
+$ poetry install
+$ source .venv/bin/activate
+```
+
+Tools including black, mypy etc. will run automatically if you install [pre-commit](https://pre-commit.com) using the instructions below
+
+```sh
+$ pre-commit install
+$ pre-commit run --all-files
+```
+
+### Running tests
+
+```sh
+$ poetry run pytest
+```
+
+## Links
+
+- Source Code: <https://github.com/DeveloperRSquared/http-exceptions/>
+- PyPI Releases: <https://pypi.org/project/http-exceptions/>
+- Issue Tracker: <https://github.com/DeveloperRSquared/http-exceptions/issues/>
