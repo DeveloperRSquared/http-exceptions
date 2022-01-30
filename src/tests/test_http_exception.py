@@ -1,3 +1,4 @@
+# pylint: disable=no-self-use
 import inspect
 from functools import partial
 from typing import Mapping
@@ -42,18 +43,31 @@ class HttpExceptionTestCase:
 
 
 class TestHTTPException(HttpExceptionTestCase):
+    # check interface
+    def test_interface(self) -> None:
+        arg_spec = inspect.getfullargspec(HTTPException)
+        assert arg_spec.args == ['self', 'status_code', 'message']
+        assert arg_spec.annotations['status_code'] == 'Optional[int]'
+        assert arg_spec.annotations['message'] == 'Optional[str]'
+
     # check all status codes are mapped
     def test_status_codes(self) -> None:
         assert set(self.all_exception_classes.keys()) == set(self.all_error_status_codes)
 
     # check HTTPException is an instance of exception
-    def test_instance_of_exception(self) -> None:  # pylint: disable=no-self-use
+    def test_instance_of_exception(self) -> None:
         http_exception = HTTPException()
         assert isinstance(http_exception, Exception)
         assert isinstance(http_exception, HTTPException)
 
 
 class TestFromStatusCode(HttpExceptionTestCase):
+    # check interface
+    def test_interface(self) -> None:
+        arg_spec = inspect.getfullargspec(HTTPException.from_status_code)
+        assert arg_spec.args == ['cls', 'status_code']
+        assert arg_spec.annotations['status_code'] == 'int'
+
     # check from_status_code returns the expected exception for all status codes
     def test_from_status_code(self) -> None:
         for status_code in self.all_error_status_codes:
@@ -68,7 +82,7 @@ class TestFromStatusCode(HttpExceptionTestCase):
             assert http_exception.message == message
 
     # check that from_status_code returns a HTTPException when the status_code doesn't match one of the client/server exceptions
-    def test_invalid_status_code(self) -> None:  # pylint: disable=no-self-use
+    def test_invalid_status_code(self) -> None:
         invalid_status_code = 0
         http_exception_cls = HTTPException.from_status_code(status_code=invalid_status_code)
         assert isinstance(http_exception_cls, partial)
@@ -81,7 +95,7 @@ class TestFromStatusCode(HttpExceptionTestCase):
         assert http_exception.message == message
 
     # check that from_status_code returns a HTTPException when the status_code is that of an unrecognized client exception
-    def test_invalid_client_status_code(self) -> None:  # pylint: disable=no-self-use
+    def test_invalid_client_status_code(self) -> None:
         invalid_status_code = 499
         client_exception_cls = HTTPException.from_status_code(status_code=invalid_status_code)
         assert isinstance(client_exception_cls, partial)
@@ -94,7 +108,7 @@ class TestFromStatusCode(HttpExceptionTestCase):
         assert client.message == message
 
     # check that from_status_code returns a HTTPException when the status_code is that of an unrecognized server exception
-    def test_invalid_server_status_code(self) -> None:  # pylint: disable=no-self-use
+    def test_invalid_server_status_code(self) -> None:
         invalid_status_code = 599
         server_exception_cls = HTTPException.from_status_code(status_code=invalid_status_code)
         assert isinstance(server_exception_cls, partial)
@@ -118,7 +132,7 @@ class TestCatch(HttpExceptionTestCase):
                 pass
 
     # check that ClientException and ServerException are caught by HTTPException
-    def test_catch_client_and_server_exceptions(self) -> None:  # pylint: disable=no-self-use
+    def test_catch_client_and_server_exceptions(self) -> None:
         for http_exception_cls in [ClientException, ServerException]:
             http_exception = http_exception_cls()
             try:
@@ -129,7 +143,7 @@ class TestCatch(HttpExceptionTestCase):
 
 class TestEquality(HttpExceptionTestCase):
     # check two instances of HTTPException can be equal
-    def test_equivalent_http_exceptions(self) -> None:  # pylint: disable=no-self-use
+    def test_equivalent_http_exceptions(self) -> None:
         status_code = 500
         message = 'HTTP Exception'
         http_exception_1 = HTTPException(status_code=status_code, message=message)
@@ -137,7 +151,7 @@ class TestEquality(HttpExceptionTestCase):
         assert http_exception_1 == http_exception_2
 
     # check instance of HTTPException not equal to a similar HTTPExcpetion with the same fields
-    def test_not_equal_to_another_class(self) -> None:  # pylint: disable=no-self-use
+    def test_not_equal_to_another_class(self) -> None:
         status_code = 500
         message = 'HTTP Exception'
         http_exception_1 = HTTPException(status_code=status_code, message=message)
@@ -145,14 +159,14 @@ class TestEquality(HttpExceptionTestCase):
         assert http_exception_1 != http_exception_2
 
     # check HTTPExceptions with different status_codes not equal
-    def test_status_code_not_equal(self) -> None:  # pylint: disable=no-self-use
+    def test_status_code_not_equal(self) -> None:
         message = 'HTTP Exception'
         http_exception_1 = HTTPException(status_code=400, message=message)
         http_exception_2 = HTTPException(status_code=500, message=message)
         assert http_exception_1 != http_exception_2
 
     # check HTTPExceptions with different messages not equal
-    def test_message_not_equal(self) -> None:  # pylint: disable=no-self-use
+    def test_message_not_equal(self) -> None:
         status_code = 500
         http_exception_1 = HTTPException(status_code=status_code, message='HTTP Exception')
         http_exception_2 = HTTPException(status_code=status_code, message='Yet Another HTTP Exception')
@@ -161,7 +175,7 @@ class TestEquality(HttpExceptionTestCase):
 
 class TestHash(HttpExceptionTestCase):
     # check hash of equivalent HTTPExceptions
-    def test_equivalent_http_exceptions(self) -> None:  # pylint: disable=no-self-use
+    def test_equivalent_http_exceptions(self) -> None:
         status_code = 500
         message = 'HTTP Exception'
         http_exception_1 = HTTPException(status_code=status_code, message=message)
@@ -169,7 +183,7 @@ class TestHash(HttpExceptionTestCase):
         assert len({http_exception_1, http_exception_2}) == 1
 
     # check hash of HTTPException not equal to a similar HTTPExcpetion with the same fields
-    def test_not_equal_to_another_class(self) -> None:  # pylint: disable=no-self-use
+    def test_not_equal_to_another_class(self) -> None:
         status_code = 500
         message = 'HTTP Exception'
         http_exception_1 = HTTPException(status_code=status_code, message=message)
@@ -177,14 +191,14 @@ class TestHash(HttpExceptionTestCase):
         assert len({http_exception_1, http_exception_2}) == 2
 
     # check hash of HTTPExceptions with different status_codes not equal
-    def test_status_code_not_equal(self) -> None:  # pylint: disable=no-self-use
+    def test_status_code_not_equal(self) -> None:
         message = 'HTTP Exception'
         http_exception_1 = HTTPException(status_code=400, message=message)
         http_exception_2 = HTTPException(status_code=500, message=message)
         assert len({http_exception_1, http_exception_2}) == 2
 
     # check hash of HTTPExceptions with different messages not equal
-    def test_message_not_equal(self) -> None:  # pylint: disable=no-self-use
+    def test_message_not_equal(self) -> None:
         status_code = 500
         http_exception_1 = HTTPException(status_code=status_code, message='HTTP Exception')
         http_exception_2 = HTTPException(status_code=status_code, message='Yet Another HTTP Exception')
