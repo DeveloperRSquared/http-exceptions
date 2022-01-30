@@ -176,7 +176,7 @@ Contributions are welcome via pull requests.
 $ git clone git@github.com:DeveloperRSquared/http-exceptions.git
 $ cd http-exceptions
 $ poetry install
-$ source .venv/bin/activate
+$ poetry shell
 ```
 
 Tools including black, mypy etc. will run automatically if you install [pre-commit](https://pre-commit.com) using the instructions below
