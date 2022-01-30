@@ -1,3 +1,6 @@
+# pylint: disable=no-self-use
+import inspect
+
 import pytest
 
 from http_exceptions import HTTPException
@@ -9,12 +12,19 @@ from tests.test_http_exception import HttpExceptionTestCase
 
 
 class TestServerException(HttpExceptionTestCase):
+    # check interface
+    def test_interface(self) -> None:
+        arg_spec = inspect.getfullargspec(ServerException)
+        assert arg_spec.args == ['self', 'status_code', 'message']
+        assert arg_spec.annotations['status_code'] == 'Optional[int]'
+        assert arg_spec.annotations['message'] == 'Optional[str]'
+
     # check all status codes are mapped
     def test_status_codes(self) -> None:
         assert set(SERVER_EXCEPTIONS.keys()) == set(self.server_error_status_codes)
 
     # check ServerException is an instance of exception
-    def test_instance_of_exception(self) -> None:  # pylint: disable=no-self-use
+    def test_instance_of_exception(self) -> None:
         server_exception = ServerException()
         assert isinstance(server_exception, Exception)
         assert isinstance(server_exception, HTTPException)
@@ -23,7 +33,7 @@ class TestServerException(HttpExceptionTestCase):
 
 class TestCatch(HttpExceptionTestCase):
     # check that all server exceptions are caught by ServerException
-    def test_catch_all_server_exceptions(self) -> None:  # pylint: disable=no-self-use
+    def test_catch_all_server_exceptions(self) -> None:
         for server_exception_cls in SERVER_EXCEPTIONS.values():
             server_exception = server_exception_cls()
             try:
@@ -32,7 +42,7 @@ class TestCatch(HttpExceptionTestCase):
                 pass
 
     # check that client exceptions are not caught by ServerException
-    def test_does_not_catch_client_exceptions(self) -> None:  # pylint: disable=no-self-use
+    def test_does_not_catch_client_exceptions(self) -> None:
         for client_exception_cls in CLIENT_EXCEPTIONS.values():
             client_exception = client_exception_cls()
             with pytest.raises(ClientException):
@@ -44,7 +54,7 @@ class TestCatch(HttpExceptionTestCase):
 
 class TestEquality(HttpExceptionTestCase):
     # check two instances of ServerException can be equal
-    def test_equivalent_server_exceptions(self) -> None:  # pylint: disable=no-self-use
+    def test_equivalent_server_exceptions(self) -> None:
         status_code = 500
         message = 'Server Exception'
         server_exception_1 = ServerException(status_code=status_code, message=message)
@@ -52,14 +62,14 @@ class TestEquality(HttpExceptionTestCase):
         assert server_exception_1 == server_exception_2
 
     # check ServerExceptions with different status_codes not equal
-    def test_status_code_not_equal(self) -> None:  # pylint: disable=no-self-use
+    def test_status_code_not_equal(self) -> None:
         message = 'Server Exception'
         server_exception_1 = ServerException(status_code=400, message=message)
         server_exception_2 = ServerException(status_code=500, message=message)
         assert server_exception_1 != server_exception_2
 
     # check ServerExceptions with different messages not equal
-    def test_message_not_equal(self) -> None:  # pylint: disable=no-self-use
+    def test_message_not_equal(self) -> None:
         status_code = 500
         server_exception_1 = ServerException(status_code=status_code, message='Server Exception')
         server_exception_2 = ServerException(status_code=status_code, message='Yet Another Server Exception')
@@ -68,7 +78,7 @@ class TestEquality(HttpExceptionTestCase):
 
 class TestHash(HttpExceptionTestCase):
     # check hash of two instances of ServerException can be equal
-    def test_equivalent_server_exceptions(self) -> None:  # pylint: disable=no-self-use
+    def test_equivalent_server_exceptions(self) -> None:
         status_code = 500
         message = 'Server Exception'
         server_exception_1 = ServerException(status_code=status_code, message=message)
@@ -76,14 +86,14 @@ class TestHash(HttpExceptionTestCase):
         assert len({server_exception_1, server_exception_2}) == 1
 
     # check hash of ServerExceptions with different status_codes not equal
-    def test_status_code_not_equal(self) -> None:  # pylint: disable=no-self-use
+    def test_status_code_not_equal(self) -> None:
         message = 'Server Exception'
         server_exception_1 = ServerException(status_code=400, message=message)
         server_exception_2 = ServerException(status_code=500, message=message)
         assert len({server_exception_1, server_exception_2}) == 2
 
     # check hash of ServerExceptions with different messages not equal
-    def test_message_not_equal(self) -> None:  # pylint: disable=no-self-use
+    def test_message_not_equal(self) -> None:
         status_code = 500
         server_exception_1 = ServerException(status_code=status_code, message='Server Exception')
         server_exception_2 = ServerException(status_code=status_code, message='Yet Another Server Exception')
