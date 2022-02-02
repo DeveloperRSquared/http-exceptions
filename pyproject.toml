@@ -41,7 +41,6 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-importlib-metadata = { version = "^1.6.0", python = "<3.8" }
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.931"
