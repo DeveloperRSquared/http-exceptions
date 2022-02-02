@@ -6,8 +6,10 @@
 [![PyPI - License](https://img.shields.io/pypi/l/http-exceptions.svg)](LICENSE)
 [![PyPI - Version](https://img.shields.io/pypi/v/http-exceptions.svg)](https://pypi.org/project/http-exceptions)
 
+[![CodeQL](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/DeveloperRSquared/http-exceptions/actions/workflows/codeql-analysis.yml)
 [![codecov](https://codecov.io/gh/DeveloperRSquared/http-exceptions/branch/main/graph/badge.svg?token=8SJ30A2GV7)](https://codecov.io/gh/DeveloperRSquared/http-exceptions)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/DeveloperRSquared/http-exceptions/main.svg)](https://results.pre-commit.ci/latest/github/DeveloperRSquared/http-exceptions/main)
+
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
