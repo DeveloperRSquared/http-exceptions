@@ -63,13 +63,13 @@ jobs:
         if: steps.cache.outputs.cache-hit == 'true'
         run: timeout 10s poetry run pip --version || rm -rf .venv
 
-      - name: Install dev dependencies
+      - name: Install dependencies
         run: poetry install --no-dev
 
       - name: Check imports
         run: poetry run python -c 'from src.http_exceptions import __version__; print(__version__)'
 
-      - name: Install dependencies
+      - name: Install dev dependencies
         run: poetry install
 
       - name: Check code style (black)
