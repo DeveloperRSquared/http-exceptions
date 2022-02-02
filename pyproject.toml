@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "http-exceptions"
-version = "0.2.8"
+version = "0.2.9"
 description = "Raisable HTTP Exceptions"
 authors = ["rikhilrai"]
 license = "MIT"
