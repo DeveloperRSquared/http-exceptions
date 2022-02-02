@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "http-exceptions"
-version = "0.2.7"
+version = "0.2.8"
 description = "Raisable HTTP Exceptions"
 authors = ["rikhilrai"]
 license = "MIT"
@@ -45,7 +45,7 @@ importlib-metadata = { version = "<4.3", python = "<3.8" }
 
 [tool.poetry.dev-dependencies]
 mypy = "^0.931"
-black = "^22.1"
+black = "^22.1.0"
 flake8 = "^4.0.1"
 isort = "^5.10.1"
 pre-commit = "^2.17.0"
