@@ -66,8 +66,11 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-dev
 
-      - name: Run tests (pytest)
-        run: poetry run python -m pytest src/
+      - name: Check imports
+        run: poetry run python -c 'from src.http_exceptions import __version__; print(__version__)'
+
+      - name: Install dependencies
+        run: poetry install
 
       - name: Check code style (black)
         run: poetry run python -m black --config $(pwd)/pyproject.toml .
