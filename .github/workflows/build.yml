@@ -7,21 +7,19 @@ on:
     branches:
       - main
 
-# defaults:
-#   run:
-#     shell: bash
+defaults:
+  run:
+    shell: bash
 
-# concurrency:
-#   group: ${{ github.head_ref }}
-#   cancel-in-progress: true
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
-  reusable_workflow_job:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: DeveloperRSquared/.github/.github/workflows/TEMPLATE.yml@common-files
-        # with:
-        #   username: rikhil
+  uses:
+    DeveloperRSquared/.github/.github/workflows/TEMPLATE.yml@common-files
+    # with:
+    #   username: rikhil
 
   # build:
   #   name: Build (${{ matrix.python-version }}) ${{ matrix.suffix }}
