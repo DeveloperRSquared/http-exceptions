@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    uses: DeveloperRSquared/.github/.github/workflows/TEMPLATE.yml@common-files
+    uses: DeveloperRSquared/.github/workflows/TEMPLATE.yml@common-files
     with:
       username: rikhil
 
