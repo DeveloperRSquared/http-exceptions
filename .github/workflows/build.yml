@@ -19,7 +19,7 @@ jobs:
   reusable_workflow_job:
     runs-on: ubuntu-latest
     steps:
-      - uses: DeveloperRSquared/.github/workflows/TEMPLATE.yml@common-files
+      - uses: DeveloperRSquared/.github/.github/workflows/TEMPLATE.yml@common-files
         # with:
         #   username: rikhil
 
