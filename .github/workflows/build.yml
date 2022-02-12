@@ -7,13 +7,13 @@ on:
     branches:
       - main
 
-defaults:
-  run:
-    shell: bash
+# defaults:
+#   run:
+#     shell: bash
 
-concurrency:
-  group: ${{ github.head_ref }}
-  cancel-in-progress: true
+# concurrency:
+#   group: ${{ github.head_ref }}
+#   cancel-in-progress: true
 
 jobs:
   reusable_workflow_job:
