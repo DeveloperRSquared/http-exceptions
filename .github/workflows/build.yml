@@ -19,4 +19,6 @@ jobs:
   build:
     uses: DeveloperRSquared/.github/.github/workflows/TEMPLATE.yml@common-files
     with:
-      username: rikhil
+      test_pypi_url: https://test.pypi.org/project/http-exceptions/
+    secrets:
+      testpypi_token: ${{ secrets.TESTPYPI_TOKEN }}
