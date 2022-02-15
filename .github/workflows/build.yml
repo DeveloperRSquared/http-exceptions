@@ -23,7 +23,7 @@ jobs:
 
   publish_test_pypi:
     uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml@common-files
-    # needs: build
+    needs: build
     with:
       test_pypi_url: https://test.pypi.org/project/http-exceptions/
     secrets:
