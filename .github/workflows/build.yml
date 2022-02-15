@@ -2,8 +2,8 @@ name: Build
 
 on:
   pull_request:
-    # paths-ignore:
-    #   - 'docs/**'
+    paths-ignore:
+      - 'docs/**'
     branches:
       - main
 
@@ -25,6 +25,9 @@ jobs:
     uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml@common-files
     needs: build
     with:
-      test_pypi_url: https://test.pypi.org/project/http-exceptions/
+      pypi_url: https://test.pypi.org/project/http-exceptions/
+      should_dry_run_publish_to_test_pypi: true
+      should_upload_coverage_to_codecov: true
     secrets:
-      testpypi_token: ${{ secrets.TESTPYPI_TOKEN }}
+      pypi_token: ${{ secrets.TESTPYPI_TOKEN }}
+      codecov_token: ${{ secrets.CODECOV_TOKEN }}
