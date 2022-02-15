@@ -17,8 +17,12 @@ concurrency:
 
 jobs:
   build:
-    # name: Build
     uses: DeveloperRSquared/.github/.github/workflows/python_package_build_template.yml@common-files
+    with:
+      package_name: http_exceptions
+
+  publish_test_pypi:
+    uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml@common-files
     with:
       test_pypi_url: https://test.pypi.org/project/http-exceptions/
     secrets:
