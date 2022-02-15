@@ -15,8 +15,8 @@ jobs:
     with:
       environment: TestPyPI
       pypi_url: https://test.pypi.org/project/http-exceptions/
-      should_publish_to_test_pypi: true
       should_upload_coverage_to_codecov: true
+      should_publish_to_test_pypi: true
     secrets:
       codecov_token: ${{ secrets.CODECOV_TOKEN }}
       pypi_token: ${{ secrets.TESTPYPI_TOKEN }}
