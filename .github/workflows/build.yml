@@ -2,8 +2,8 @@ name: Build
 
 on:
   pull_request:
-    paths-ignore:
-      - 'docs/**'
+    # paths-ignore:
+    #   - 'docs/**'
     branches:
       - main
 
