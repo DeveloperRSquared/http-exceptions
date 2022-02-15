@@ -11,7 +11,7 @@ on:
 
 jobs:
   publish_test_pypi:
-    uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml@common-files
+    uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml
     with:
       environment: TestPyPI
       pypi_url: https://test.pypi.org/project/http-exceptions/

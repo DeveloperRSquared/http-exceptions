@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish_pypi:
-    uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml@common-files
+    uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml
     with:
       environment: PyPI
       pypi_url: https://pypi.org/project/http-exceptions/
