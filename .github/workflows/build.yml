@@ -13,12 +13,12 @@ concurrency:
 
 jobs:
   build:
-    uses: DeveloperRSquared/.github/.github/workflows/python_package_build_template.yml
+    uses: DeveloperRSquared/.github/.github/workflows/python_package_build_template.yml@main
     with:
       package_name: http_exceptions
 
   publish_test_pypi:
-    uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml
+    uses: DeveloperRSquared/.github/.github/workflows/python_package_publish_template.yml@main
     needs: build
     with:
       environment: TestPyPI
