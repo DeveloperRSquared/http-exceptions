@@ -8,6 +8,7 @@ except ImportError:
     from importlib_metadata import PackageNotFoundError  # type: ignore[no-redef]
 
 try:
+    print(__name__)
     __version__: str = version(__name__)
 except PackageNotFoundError:
     __version__ = "unknown"
